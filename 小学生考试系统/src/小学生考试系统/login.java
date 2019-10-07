@@ -19,13 +19,18 @@ public class login {
 			return true;
 		}
 	}
-	public static void successlogin(String name,String major,String Class) {
-		boolean context = checklogin(name, major, Class);
-		if(context) {
-			time.countdown();
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "请将信息填写完整", "错误", JOptionPane.ERROR_MESSAGE);
-		}
+
+	public String getname() {
+		return this.name;
+	}
+	public String getmajor() {
+		return this.major;
+	}
+	public String getclass() {
+		return this.Class;
+	}
+	public String getresults() {
+		String a = String.valueOf(results);
+		return a;
 	}
 }
