@@ -20,6 +20,15 @@ public class jframe extends JFrame{
 	JTextField names;
 	JTextField majors;
 	JTextField Classes;
+	JLabel countdowns;
+	JFrame frame;
+	List<JPanel>panellist = new ArrayList<>();
+	List<JTextField>answerlist = new ArrayList<>();
+	List<JLabel>subjectlist = new ArrayList<>();
+	List<String>rightkey = new ArrayList<>();
+	/*
+	 * 登录界面
+	 */
 	public jframe() {
 		this.setBounds(800, 400,350,150);
 		this.setTitle("广州市X小学数学考试自动系统");
@@ -53,14 +62,9 @@ public class jframe extends JFrame{
 		});
 		this.setVisible(true);
 	}
-	public static void logins() {
-		jframe f = new jframe();
-	}
-	static JLabel countdowns;
-	static JFrame frame;
-	public void shownumber() {
-
-	}
+	/*
+	 * 登录信息不完整提示框
+	 */
 	public  void successlogin(String name,String major,String Class) {
 		boolean context = login.checklogin(name, major, Class);
 		if(context) {
@@ -70,17 +74,35 @@ public class jframe extends JFrame{
 			JOptionPane.showMessageDialog(null, "请将信息填写完整", "错误", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	/*
+	 * 产生试题以及存储正确答案
+	 */
+	public void showsubject() {
+		for(int a = 0;a<50;a++) {
+			math maths = new math();
+			maths.number();
+			JLabel subject = new JLabel(maths.toString());
+			subjectlist.add(subject);
+			rightkey.add(String.valueOf(maths.g));
+		}
+	}
+	
+	/*
+	 * 考试界面
+	 */
 	public  void GUIscreen() {
-		List<JPanel>list = new ArrayList<>();
-		List<Object>answer_exam = new ArrayList<>();
-		List<JTextField>tf_exam = new ArrayList<>();
-		
-		JFrame frame = new JFrame();
+		int y_subject= 0;
+		int y_answer=0;
+		int panel_number = 0;
+		showsubject();
+		//创建主页面
+		JFrame frame = new JFrame("广州市X小学数学考试自动系统");
 		frame.getContentPane().setLayout(null);
-		frame.setBounds(600, 250,500,500);
-
+		frame.setBounds(600, 250,510,400);
+		Container c = frame.getContentPane();
+		//创建计时页面以及实现新线程接口
 		JLabel countdowns = new JLabel();
-		countdowns.setBounds(200, 13, 200, 31);
+		countdowns.setBounds(20, 325, 140, 26);
 		frame.getContentPane().add(countdowns);
 		Thread times_Thread = new Thread(new Runnable() {
 			@Override
@@ -90,61 +112,39 @@ public class jframe extends JFrame{
 			}
 			
 		});
-		times_Thread.start();
+		times_Thread.start();//线程启动
 		
-		
-
-		
-		
-		JPanel panel_exam = new JPanel();
+		//创建卡式结构主页面
+		JPanel panel_main = new JPanel();
 		CardLayout cardlayout = new CardLayout();
-		panel_exam.setLayout(cardlayout);
+		panel_main.setLayout(cardlayout);
+		c.add(panel_main);
+		for(int a=0;a<10;a++) {
+			JPanel cardpanel = new JPanel();
+			panellist.add(cardpanel);
+		}
+		for(int b=0;b<50;b++) {
+			JLabel label = subjectlist.get(b);
+			label.setBounds(79,y_subject, 136, 29);
+			JTextField answer = new JTextField();
+			answer.setBounds(269, y_answer, 136, 29);
+			answerlist.add(answer);
+			y_subject+=50;
+			y_answer+=50;
+			panellist.get(panel_number).setLayout(null);
+			panellist.get(panel_number).add(label);
+			panellist.get(panel_number).add(answer);
+			if((b+1)%5==0&&b!=49) {
+				y_subject=0;
+				y_answer=0;
+				panel_number++;
+			}
+		}
+		for(int d = 0;d<panellist.size();d++) {
+			panel_main.add(panellist.get(d));
+		}
 		
 		
-		JLabel lblNewLabel = new JLabel("第一题");
-		lblNewLabel.setBounds(10, 7, 173, 31);
-		panel_exam.add(lblNewLabel);
-		
-		JLabel label = new JLabel("第二题");
-		label.setBounds(10, 57, 173, 31);
-		panel_exam.add(label);
-		
-		JLabel label_1 = new JLabel("第三题");
-		label_1.setBounds(10, 107, 173, 31);
-		panel_exam.add(label_1);
-		
-		JLabel label_2 = new JLabel("第四题");
-		label_2.setBounds(10, 157, 173, 31);
-		panel_exam.add(label_2);
-		
-		JLabel label_3 = new JLabel("第五题");
-		label_3.setBounds(10, 207, 173, 31);
-		panel_exam.add(label_3);
-		
-		JTextField textField = new JTextField();
-		textField.setBounds(258, 7, 112, 31);
-		panel_exam.add(textField);
-		textField.setColumns(10);
-		
-		JTextField textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(258, 57, 112, 31);
-		panel_exam.add(textField_1);
-		
-		JTextField textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(258, 107, 112, 31);
-		panel_exam.add(textField_2);
-		
-		JTextField textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(258, 157, 112, 31);
-		panel_exam.add(textField_3);
-		
-		JTextField textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(258, 207, 112, 31);
-		panel_exam.add(textField_4);
 		
 		
 		JButton b1 = new JButton("首页");
@@ -154,7 +154,7 @@ public class jframe extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				cardlayout.first(panel_exam);
+				cardlayout.first(panel_main);
 			}
 		});
 		
@@ -166,7 +166,7 @@ public class jframe extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				cardlayout.previous(panel_exam);
+				cardlayout.previous(panel_main);
 			}
 			
 		});
@@ -178,7 +178,7 @@ public class jframe extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				cardlayout.next(panel_exam);}
+				cardlayout.next(panel_main);}
 		});
 		
 		
@@ -189,9 +189,12 @@ public class jframe extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				cardlayout.last(panel_exam);
+				cardlayout.last(panel_main);
 			}
 		});
+		JButton submit = new JButton("提交");
+		submit.setBounds(218, 325, 130, 26);
+		frame.getContentPane().add(submit);
 		frame.setVisible(true);
 	}
 	public static  void countdown(int endtime, JLabel countdowns1){

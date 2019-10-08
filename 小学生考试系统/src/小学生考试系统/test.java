@@ -4,6 +4,7 @@ public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		/*
 		int i,j;
 		math a = new math();
 		for(i=0;i<50;i++){
@@ -15,7 +16,7 @@ public class test {
 			a.g=-1;
 		} 
 		//jframe.logins();
-	
+	*/
 		jframe ab = new jframe();
 	}
 
