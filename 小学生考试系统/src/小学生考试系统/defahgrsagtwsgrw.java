@@ -2,104 +2,51 @@ package 小学生考试系统;
 
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class jframe extends JFrame{
-	JTextField names;
-	JTextField majors;
-	JTextField Classes;
-	JLabel countdowns;
-	JFrame frame;
-	List<JPanel>panellist = new ArrayList<>();
-	List<JTextField>answerlist = new ArrayList<>();
-	List<JLabel>subjectlist = new ArrayList<>();
-	List<String>rightkey = new ArrayList<>();
-	/*
-	 * 登录界面
+public class defahgrsagtwsgrw {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
 	 */
-	public jframe() {
-		this.setBounds(800, 400,350,150);
-		this.setTitle("广州市X小学数学考试自动系统");
-		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		Container c = this.getContentPane();
-		c.setLayout(new FlowLayout());
-		JLabel name = new JLabel("姓名");
-		name.setFont(new Font("楷体",Font.BOLD,15));
-		JTextField names = new JTextField();
-		names.setColumns(23);
-		JLabel major = new JLabel("专业");
-		major.setFont(new Font("楷体",Font.BOLD,15));
-		JTextField majors = new JTextField();
-		majors.setColumns(23);
-		JLabel Class = new JLabel("班级");
-		Class.setFont(new Font("楷体",Font.BOLD,15));
-		JTextField Classes = new JTextField();
-		Classes.setColumns(23);
-		JButton began = new JButton("开始考试");
-		c.add(name);
-		c.add(names);
-		c.add(major);
-		c.add(majors);
-		c.add(Class);
-		c.add(Classes);
-		c.add(began);
-		began.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				successlogin(names.getText(), majors.getText(),Classes.getText());
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					defahgrsagtwsgrw window = new defahgrsagtwsgrw();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		this.setVisible(true);
 	}
-	/*
-	 * 登录信息不完整提示框
+
+	/**
+	 * Create the application.
 	 */
-	public  void successlogin(String name,String major,String Class) {
-		boolean context = login.checklogin(name, major, Class);
-		if(context) {
-			GUIscreen();
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "请将信息填写完整", "错误", JOptionPane.ERROR_MESSAGE);
-		}
+	public defahgrsagtwsgrw() {
+		initialize();
 	}
-	/*
-	 * 产生试题以及存储正确答案
+
+	/**
+	 * Initialize the contents of the frame.
 	 */
-	public void showsubject() {
-		for(int a = 0;a<50;a++) {
-			math maths = new math();
-			maths.number();
-			JLabel subject = new JLabel(maths.toString());
-			subjectlist.add(subject);
-			rightkey.add(String.valueOf(maths.g));
-		}
-	}
-	
-	/*
-	 * 考试界面
-	 */
-	public  void GUIscreen() {
-		int y_subject= 0;
-		int y_answer=0;
-		int panel_number = 0;
-		showsubject();
-		//创建主页面
+	private void initialize() {
 		JFrame frame = new JFrame("广州市X小学数学考试自动系统");
-		frame.getContentPane().setLayout(null);
 		frame.setBounds(600, 250,510,400);
 		Container c = frame.getContentPane();
+		frame.getContentPane().setLayout(null);
 		//创建计时页面以及实现新线程接口
 		JLabel countdowns = new JLabel();
 		countdowns.setBounds(20, 325, 140, 26);
@@ -116,7 +63,7 @@ public class jframe extends JFrame{
 		
 		//创建卡式结构主页面
 		JPanel panel_main = new JPanel();
-		panel_main.setBounds(10, 10, 474, 259);
+		panel_main.setBounds(0, 0, 0, 0);
 		CardLayout cardlayout = new CardLayout();
 		panel_main.setLayout(cardlayout);
 		c.add(panel_main);
@@ -196,30 +143,9 @@ public class jframe extends JFrame{
 		JButton submit = new JButton("提交");
 		submit.setBounds(218, 325, 130, 26);
 		frame.getContentPane().add(submit);
-		frame.setVisible(true);
-	}
-	public static  void countdown(int endtime, JLabel countdowns1){
-		StringBuilder times = new StringBuilder();
-		while(endtime>0){
-			endtime--;				
-			int hour = endtime/60/60%60;
-			int minute = endtime/60%60;
-			int second = endtime%60;
-			times.append("还剩");
-			times.append(hour);
-			times.append("小时");
-			times.append(minute);
-			times.append("分钟");
-			times.append(second);
-			times.append("秒");
-			countdowns1.setText(times.toString());
-			countdowns1.updateUI();
-			times = new StringBuilder();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			e.printStackTrace();
-			}
-		}
-	}
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 10, 474, 259);
+		frame.getContentPane().add(panel);
+		frame.setVisible(true);	}
 }
