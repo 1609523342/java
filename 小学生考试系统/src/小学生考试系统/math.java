@@ -34,13 +34,14 @@ public class math {
 				g=f-c;
 			}
 	}
-	public  StringBuilder printnumber() {
+	public  String printnumber() {
 		StringBuilder printfnumber = new StringBuilder();
 		printfnumber.append(a);
 		printfnumber.append(symbol[d]);
 		printfnumber.append(b);
 		printfnumber.append(symbol[e]);
 		printfnumber.append(c);
-		return printfnumber;
+		String a = String.valueOf(printfnumber);
+		return a;
 	}
 }

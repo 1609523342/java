@@ -47,10 +47,30 @@ public class defahgrsagtwsgrw {
 		frame.setBounds(600, 250,510,400);
 		Container c = frame.getContentPane();
 		frame.getContentPane().setLayout(null);
-		//创建计时页面以及实现新线程接口
-		JLabel countdowns = new JLabel();
-		countdowns.setBounds(20, 325, 140, 26);
-		frame.getContentPane().add(countdowns);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(22, 20, 108, 30);
+		frame.getContentPane().add(panel);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(22, 73, 108, 30);
+		frame.getContentPane().add(panel_1);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(22, 126, 108, 30);
+		frame.getContentPane().add(panel_2);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(157, 20, 108, 30);
+		frame.getContentPane().add(panel_3);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(157, 73, 108, 30);
+		frame.getContentPane().add(panel_4);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBounds(157, 126, 108, 30);
+		frame.getContentPane().add(panel_5);
 		Thread times_Thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -59,14 +79,7 @@ public class defahgrsagtwsgrw {
 			}
 			
 		});
-		times_Thread.start();//线程启动
-		
-		//创建卡式结构主页面
-		JPanel panel_main = new JPanel();
-		panel_main.setBounds(0, 0, 0, 0);
-		CardLayout cardlayout = new CardLayout();
-		panel_main.setLayout(cardlayout);
-		c.add(panel_main);
+		times_Thread.start();
 		for(int a=0;a<10;a++) {
 			JPanel cardpanel = new JPanel();
 			panellist.add(cardpanel);
@@ -91,61 +104,5 @@ public class defahgrsagtwsgrw {
 		for(int d = 0;d<panellist.size();d++) {
 			panel_main.add(panellist.get(d));
 		}
-		
-		
-		
-		
-		JButton b1 = new JButton("首页");
-		b1.setBounds(10, 286, 121, 29);
-		frame.getContentPane().add(b1);
-		b1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				cardlayout.first(panel_main);
-			}
-		});
-		
-		
-		JButton b2 = new JButton("上一页");
-		b2.setBounds(129, 286, 121, 29);
-		frame.getContentPane().add(b2);
-		b2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				cardlayout.previous(panel_main);
-			}
-			
-		});
-		
-		JButton b3 = new JButton("下一页");
-		b3.setBounds(245, 286, 121, 29);
-		frame.getContentPane().add(b3);
-		b3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				cardlayout.next(panel_main);}
-		});
-		
-		
-		JButton b4 = new JButton("尾页");
-		b4.setBounds(363, 286, 121, 29);
-		frame.getContentPane().add(b4);
-		b4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				cardlayout.last(panel_main);
-			}
-		});
-		JButton submit = new JButton("提交");
-		submit.setBounds(218, 325, 130, 26);
-		frame.getContentPane().add(submit);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 10, 474, 259);
-		frame.getContentPane().add(panel);
 		frame.setVisible(true);	}
 }

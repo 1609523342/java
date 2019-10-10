@@ -81,7 +81,7 @@ public class jframe extends JFrame{
 		for(int a = 0;a<50;a++) {
 			math maths = new math();
 			maths.number();
-			JLabel subject = new JLabel(maths.toString());
+			JLabel subject = new JLabel(maths.printnumber());
 			subjectlist.add(subject);
 			rightkey.add(String.valueOf(maths.g));
 		}
@@ -99,6 +99,7 @@ public class jframe extends JFrame{
 		JFrame frame = new JFrame("广州市X小学数学考试自动系统");
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(600, 250,510,400);
+		frame.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		Container c = frame.getContentPane();
 		//创建计时页面以及实现新线程接口
 		JLabel countdowns = new JLabel();
@@ -196,9 +197,26 @@ public class jframe extends JFrame{
 		JButton submit = new JButton("提交");
 		submit.setBounds(218, 325, 130, 26);
 		frame.getContentPane().add(submit);
+		submit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				times_Thread.interrupt();
+				
+			}
+		});
 		frame.setVisible(true);
 	}
-	public static  void countdown(int endtime, JLabel countdowns1){
+	/*
+	 * 考试结束之后的结果显示界面和历史界面
+	 */
+	public void after_test() {
+		JFrame frame = new JFrame("广州市X小学数学考试自动系统");
+		frame.getContentPane().setLayout(null);
+		frame.setBounds(600, 250,510,400);
+		frame.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+	}
+ 	public static  void countdown(int endtime, JLabel countdowns1){
 		StringBuilder times = new StringBuilder();
 		while(endtime>0){
 			endtime--;				
@@ -221,5 +239,21 @@ public class jframe extends JFrame{
 			e.printStackTrace();
 			}
 		}
+	}
+	public String getresult() {
+		int b = 0;
+		for(int a = 0;a<50;a++) {
+			if(answerlist.get(a).getText()==rightkey.get(a)) {
+				b++;
+			}
+			else {
+				continue;
+			}
+		}
+		String score = String.valueOf(b*2);
+		return score;
+	}
+	public void save_information() {
+		login login = new login(names.getText(),majors.getText(),Classes.getText(),getresult());
 	}
 }
