@@ -6,6 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,8 +204,15 @@ public class jframe extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				times_Thread.interrupt();
-				
+				//times_Thread.interrupt();
+				login login = new login(names.getText(),majors.getText(),Classes.getText(),getresult(answerlist,rightkey));
+				after_test(login);
+				try {
+					save_information(login);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		frame.setVisible(true);
@@ -210,11 +220,15 @@ public class jframe extends JFrame{
 	/*
 	 * 考试结束之后的结果显示界面和历史界面
 	 */
-	public void after_test() {
+	public void after_test(login login) {
 		JFrame frame = new JFrame("广州市X小学数学考试自动系统");
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(600, 250,510,400);
 		frame.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		
+		JLabel JLabel = new JLabel(login.results);
+		JLabel.setBounds(22, 20, 108, 30);
+		frame.getContentPane().add(JLabel);
 	}
  	public static  void countdown(int endtime, JLabel countdowns1){
 		StringBuilder times = new StringBuilder();
@@ -240,7 +254,7 @@ public class jframe extends JFrame{
 			}
 		}
 	}
-	public String getresult() {
+	public String getresult(List<JTextField>answerlist,List<String>rightkey) {
 		int b = 0;
 		for(int a = 0;a<50;a++) {
 			if(answerlist.get(a).getText()==rightkey.get(a)) {
@@ -253,7 +267,12 @@ public class jframe extends JFrame{
 		String score = String.valueOf(b*2);
 		return score;
 	}
-	public void save_information() {
-		login login = new login(names.getText(),majors.getText(),Classes.getText(),getresult());
+	public void save_information(login login) throws IOException {
+		BufferedWriter data = new BufferedWriter(new FileWriter("考试信息",true));
+		//login login = new login(names.getText(),majors.getText(),Classes.getText(),getresult());
+		data.write(login.name+"\t");
+		data.write(login.major+"\t");
+		data.write(login.Class+"\t");
+		data.write(login.results+"\t");
 	}
 }
